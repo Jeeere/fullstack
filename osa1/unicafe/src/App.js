@@ -14,15 +14,22 @@ const App = () => {
       <Button handleClick={() => setNeutral(neutral + 1)} text="neutral" />
       <Button handleClick={() => setBad(bad + 1)} text="bad" />
       <h1>statistics</h1>
-      <StatisticLine num={good} text="good" />
-      <StatisticLine num={neutral} text="neutral" />
-      <StatisticLine num={bad} text="bad" />
-      <StatisticLine num={good + neutral + bad} text="all" />
-      <StatisticLine num={(good*1 + bad*(-1)) / (good + neutral + bad)} text="average" />
-      <StatisticLine num={(good / (good + neutral + bad)) * 100 + "%"} text="positive" />
+      <Statistics good={good} neutral={neutral} bad={bad} />
     </div>
   )
 }
+
+
+const Statistics = ({ good, neutral, bad }) => (
+  <div>
+    <StatisticLine num={good} text="good" />
+    <StatisticLine num={neutral} text="neutral" />
+    <StatisticLine num={bad} text="bad" />
+    <StatisticLine num={good + neutral + bad} text="all" />
+    <StatisticLine num={(good*1 + bad*(-1)) / (good + neutral + bad)} text="average" />
+    <StatisticLine num={(good / (good + neutral + bad)) * 100 + "%"} text="positive" />
+  </div>
+)
 
 
 const StatisticLine = ({ text, num }) => (
