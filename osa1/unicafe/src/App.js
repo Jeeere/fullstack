@@ -27,23 +27,26 @@ const Statistics = ({ good, neutral, bad }) => {
     )
   } else {
     return (
-      <div>
-        <StatisticLine num={good} text="good" />
-        <StatisticLine num={neutral} text="neutral" />
-        <StatisticLine num={bad} text="bad" />
-        <StatisticLine num={good + neutral + bad} text="all" />
-        <StatisticLine num={(good*1 + bad*(-1)) / (good + neutral + bad)} text="average" />
-        <StatisticLine num={(good / (good + neutral + bad)) * 100 + "%"} text="positive" />
-      </div>
+      <table>
+        <tbody>
+          <StatisticLine num={good} text="good" />
+          <StatisticLine num={neutral} text="neutral" />
+          <StatisticLine num={bad} text="bad" />
+          <StatisticLine num={good + neutral + bad} text="all" />
+          <StatisticLine num={((good*1 + bad*(-1)) / (good + neutral + bad)).toFixed(1)} text="average" />
+          <StatisticLine num={((good / (good + neutral + bad)) * 100).toFixed(1) + "%"} text="positive" />
+        </tbody>
+      </table>
     )
   }
 }
 
 
 const StatisticLine = ({ text, num }) => (
-  <text>
-      {text} {num}<br/>
-  </text>
+  <tr>
+    <td>{text}</td>
+    <td>{num}</td>
+  </tr>
 )
 
 
