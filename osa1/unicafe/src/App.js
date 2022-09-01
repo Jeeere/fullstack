@@ -20,16 +20,24 @@ const App = () => {
 }
 
 
-const Statistics = ({ good, neutral, bad }) => (
-  <div>
-    <StatisticLine num={good} text="good" />
-    <StatisticLine num={neutral} text="neutral" />
-    <StatisticLine num={bad} text="bad" />
-    <StatisticLine num={good + neutral + bad} text="all" />
-    <StatisticLine num={(good*1 + bad*(-1)) / (good + neutral + bad)} text="average" />
-    <StatisticLine num={(good / (good + neutral + bad)) * 100 + "%"} text="positive" />
-  </div>
-)
+const Statistics = ({ good, neutral, bad }) => {
+  if (good + neutral + bad === 0) {
+    return (
+      <div>No feedback given</div>
+    )
+  } else {
+    return (
+      <div>
+        <StatisticLine num={good} text="good" />
+        <StatisticLine num={neutral} text="neutral" />
+        <StatisticLine num={bad} text="bad" />
+        <StatisticLine num={good + neutral + bad} text="all" />
+        <StatisticLine num={(good*1 + bad*(-1)) / (good + neutral + bad)} text="average" />
+        <StatisticLine num={(good / (good + neutral + bad)) * 100 + "%"} text="positive" />
+      </div>
+    )
+  }
+}
 
 
 const StatisticLine = ({ text, num }) => (
