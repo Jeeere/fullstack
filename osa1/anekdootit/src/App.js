@@ -14,16 +14,24 @@ const App = () => {
   const [selected, setSelected] = useState(0);
   const [votes, setVote] = useState(new Array(anecdotes.length).fill(0));
 
+  // Create copy of votes, increment it and set is as new votes
   const incrementVote = () => {
-    const copy = { ...votes };
+    const copy = [...votes];
     copy[selected] += 1;
     setVote(copy);
   };
 
+  // Get index of most voted anecdote
+  const mostVotedIndex = votes.indexOf(Math.max(...votes));
+
   return (
     <div>
-      <h2>{anecdotes[selected]}</h2>
-      <h2>has {votes[selected]} votes</h2>
+      <h2>Anecdote of the day</h2>
+      <p>
+        {anecdotes[selected]}
+        <br />
+        has {votes[selected]} votes
+      </p>
       <Button handleClick={() => incrementVote()} text="vote" />
       <Button
         handleClick={() =>
@@ -31,6 +39,8 @@ const App = () => {
         }
         text="next anecdote"
       />
+      <h2>Anecdote with most votes</h2>
+      <p>{anecdotes[mostVotedIndex]}</p>
     </div>
   );
 };
