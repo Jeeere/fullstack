@@ -12,9 +12,13 @@ const App = () => {
   const addPerson = (event) => {
     event.preventDefault();
     console.log("button clicked", event.target);
-    const copy = [...persons];
-    copy.push({ name: newName });
-    setPersons(copy);
+    if (persons.some(e => e.name === newName)) {
+      alert(`${newName} is already added to phonebook`)
+    } else {
+      const copy = [...persons];
+      copy.push({ name: newName });
+      setPersons(copy);
+    }
   };
 
   return (
