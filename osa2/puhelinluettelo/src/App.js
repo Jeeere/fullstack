@@ -1,7 +1,7 @@
 import { useState } from "react";
-import Filter from "./components/Filter"
-import AddPersonForm from "./components/AddPersonForm"
-import Numbers from "./components/Numbers"
+import Filter from "./components/Filter";
+import AddPersonForm from "./components/AddPersonForm";
+import Numbers from "./components/Numbers";
 
 const App = () => {
   const [persons, setPersons] = useState([]);
@@ -24,7 +24,9 @@ const App = () => {
     setNewFilter(event.target.value);
     // console.log(`Filter: ${event.target.value}`);
     setFilteredPersons(
-      persons.filter((person) => person.name.toLowerCase().includes(event.target.value.toLowerCase()))
+      persons.filter((person) =>
+        person.name.toLowerCase().includes(event.target.value.toLowerCase())
+      )
     );
   };
 
@@ -45,7 +47,13 @@ const App = () => {
       <h2>Phonebook</h2>
       <Filter newFilter={newFilter} handleFilterChange={handleFilterChange} />
       <h2>Add new contact</h2>
-      <AddPersonForm addPerson={addPerson} newName={newName} handleNameChange={handleNameChange} newPhone={newPhone} handlePhoneChange={handlePhoneChange} />
+      <AddPersonForm
+        addPerson={addPerson}
+        newName={newName}
+        handleNameChange={handleNameChange}
+        newPhone={newPhone}
+        handlePhoneChange={handlePhoneChange}
+      />
       <h2>Numbers</h2>
       <Numbers filteredPersons={filteredPersons} />
     </div>
