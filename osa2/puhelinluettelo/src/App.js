@@ -46,11 +46,15 @@ const App = () => {
     if (persons.some((e) => e.name === newName)) {
       alert(`${newName} is already added to phonebook`);
     } else {
-      const copy = [...persons];
-      copy.push({ name: newName, number: newPhone });
-      setPersons(copy);
-      setFilteredPersons(copy);
-      setNewFilter("");
+      axios
+        .post('http://localhost:3001/persons', { name: newName, number: newPhone })
+        .then(response => {
+          setPersons(persons.concat(response.data))
+          setFilteredPersons(persons.concat(response.data))
+          setNewFilter('')
+          setNewName('')
+          setNewPhone('')
+      })
     }
   };
 
