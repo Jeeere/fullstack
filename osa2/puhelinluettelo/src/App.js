@@ -41,11 +41,13 @@ const App = () => {
   const handleDelete = (id, name) => {
     if (window.confirm(`Delete ${name}?`)) {
       personService.remove(id).then((response) => {
+        // Filter removed contact from list
         const personRemoved = persons.filter((person) => person.id !== id);
+        setPersons(personRemoved);
+        // Refilter
         const personRemovedFiltered = filteredPersons.filter(
           (person) => person.id !== id
         );
-        setPersons(personRemoved);
         setFilteredPersons(personRemovedFiltered);
       });
     }
@@ -54,18 +56,49 @@ const App = () => {
   const addPerson = (event) => {
     event.preventDefault();
     console.log("button clicked", event.target);
-    if (persons.some((e) => e.name === newName)) {
-      alert(`${newName} is already added to phonebook`);
+
+    // Get contacts with same name
+    const match = persons.filter(
+      (person) => person.name.toLowerCase() === newName.toLowerCase()
+    );
+
+    if (match !== 0) {
+      if (
+        window.confirm(
+          `${newName} is already added to the phonebook, replace the old number with a new one?`
+        )
+      ) {
+        personService
+          .update(match[0].id, { name: match[0].name, number: newPhone })
+          .then((response) => {
+            // Replace old number with new
+            const newPersons = persons.map((person) =>
+              person.id === response.data.id ? response.data : person
+            );
+            setPersons(newPersons);
+            // Refilter
+            const newPersonsFiltered = newPersons.filter((person) =>
+              person.name.toLowerCase().includes(newFilter.toLowerCase())
+            );
+            setFilteredPersons(newPersonsFiltered);
+            // Empty input fields
+            setNewName("");
+            setNewPhone("");
+          });
+      }
     } else {
       personService
         .create({ name: newName, number: newPhone })
         .then((response) => {
+          // Add new contact information
           const newPersons = persons.concat(response.data);
+          setPersons(newPersons);
+          // Refilter
           const newPersonsFiltered = newPersons.filter((person) =>
             person.name.toLowerCase().includes(newFilter.toLowerCase())
           );
-          setPersons(newPersons);
           setFilteredPersons(newPersonsFiltered);
+          // Empty input fields
           setNewName("");
           setNewPhone("");
         });
