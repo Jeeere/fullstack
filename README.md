@@ -1,2 +1,2 @@
-# Full Stack open 2022
+# fullstack
 Returnables for the Full stack open 2022 course.
